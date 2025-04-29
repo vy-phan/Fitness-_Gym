@@ -3,121 +3,441 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lộ Trình Tập 90 Ngày</title>
+  <title>Lộ Trình Tập 90 Ngày Chi Tiết</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary-color: #e53935; /* Red color */
+      --primary-light: #f8d7da; /* Light red background */
+      --secondary-color: #d32f2f; /* Darker red */
+      --text-color: #333;
+      --light-gray: #f4f4f4;
+      --medium-gray: #ccc;
+      --dark-gray: #555;
+      --background-color: #ffffff;
+      --card-background: #fdfdfd;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      --transition-speed: 0.3s;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      margin: 20px;
-      color: #333;
+      font-family: 'Poppins', Arial, sans-serif; /* Changed font */
+      line-height: 1.7; /* Increased line-height */
+      margin: 0 auto; /* Center content */
+      padding: 20px;
+      color: var(--text-color);
+      background-color: var(--light-gray); /* Subtle background color */
+      max-width: 900px; /* Limit width for better readability */
     }
+
+    .container { /* Optional: Add a container div around content if preferred */
+        background-color: var(--background-color);
+        padding: 30px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+    }
+
     h1, h2, h3 {
-      color: #e53935;
+      color: var(--primary-color);
+      margin-bottom: 1em; /* Add space below headings */
+      font-weight: 600; /* Slightly bolder */
     }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 1.5em;
+        font-weight: 700;
+    }
+
+    h2 {
+        border-bottom: 2px solid var(--primary-light);
+        padding-bottom: 0.5em;
+    }
+
     table {
       width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
+      border-collapse: separate; /* Changed for border-radius */
+      border-spacing: 0; /* Remove spacing between cells */
+      margin: 25px 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+      border-radius: var(--border-radius); /* Rounded corners for table */
+      overflow: hidden; /* Clip content to rounded corners */
     }
+
     th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
+      border-bottom: 1px solid var(--medium-gray);
+      padding: 12px 15px; /* Increased padding */
       text-align: center;
     }
+
     th {
-      background-color: #f8d7da;
+      background-color: var(--primary-color); /* Use main red for header */
+      color: var(--background-color); /* White text */
+      font-weight: 600;
+      text-transform: uppercase; /* Uppercase headers */
+      letter-spacing: 0.5px;
+      border-bottom: none; /* Remove bottom border for header cells */
     }
+
+    td {
+        background-color: var(--card-background); /* Light background for cells */
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none; /* Remove border for the last row */
+    }
+
+    tbody tr:hover td { /* Hover effect */
+        background-color: var(--primary-light);
+        cursor: default; /* Indicate non-interactive row */
+    }
+
     ul {
-      list-style-type: disc;
-      margin-left: 20px;
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    li {
+      margin-bottom: 20px; /* Increased space between exercises */
+      background-color: var(--card-background); /* Card-like background */
+      padding: 15px;
+      border-radius: var(--border-radius);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      transition: box-shadow var(--transition-speed) ease; /* Smooth shadow transition */
+    }
+    li:hover {
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    .exercise-toggle {
+      background: none; /* Explicitly none */
+      border: 1px solid var(--primary-color); /* Border matching theme */
+      color: var(--primary-color); /* Theme color */
+      cursor: pointer;
+      font-size: 1em; /* Slightly larger */
+      font-family: inherit;
+      padding: 5px 12px; /* Padding for button feel */
+      margin: 0 5px 0 0; /* Space after button */
+      font-weight: 600; /* Bolder name */
+      text-align: left;
+      border-radius: var(--border-radius); /* Rounded corners */
+      transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease; /* Smooth transition */
+      display: inline-flex; /* Align icon and text */
+      align-items: center;
+    }
+
+    .exercise-toggle::before {
+      content: '+'; /* Plus sign */
+      font-weight: bold;
+      margin-right: 8px; /* Space between icon and text */
+      display: inline-block;
+      transition: transform var(--transition-speed) ease; /* Rotate transition */
+    }
+
+    .exercise-toggle:hover {
+        background-color: var(--primary-light); /* Light red background on hover */
+        color: var(--secondary-color); /* Darker red text */
+    }
+
+    .exercise-toggle.active {
+        background-color: var(--primary-color); /* Red background when active */
+        color: var(--background-color); /* White text */
+    }
+
+    .exercise-toggle.active::before {
+      content: '−'; /* Change to minus sign when active (using a proper minus) */
+      transform: rotate(180deg); /* Rotate the plus */
+    }
+
+    .exercise-content {
+      display: none;
+      margin-top: 15px; /* More space above video */
+      padding-left: 15px;
+      border-left: 4px solid var(--primary-color); /* Stronger visual indent */
+      margin-left: 5px;
+      background-color: var(--light-gray); /* Slightly different background */
+      padding: 15px;
+      border-radius: 0 var(--border-radius) var(--border-radius) 0; /* Rounded corners */
+    }
+
+    .exercise-content iframe {
+      width: 100%;
+      max-width: 560px;
+      aspect-ratio: 16 / 9;
+      border: none;
+      border-radius: var(--border-radius); /* Rounded corners for iframe */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Shadow for iframe */
+    }
+
+    .note {
+        font-style: normal; /* Remove default italic if not desired */
+        color: var(--dark-gray);
+        margin: 20px 0; /* Consistent margin */
+        padding: 15px 20px;
+        background-color: var(--primary-light); /* Light red background */
+        border-left: 5px solid var(--primary-color); /* Stronger theme border */
+        border-radius: var(--border-radius); /* Rounded corners */
+        font-size: 0.95em; /* Slightly smaller text */
+    }
+
+    /* Style for general notes section */
+    h2 + ul > li { /* Target list items directly under H2 (General Notes) */
+        background-color: transparent; /* Remove card background */
+        padding: 0;
+        box-shadow: none;
+        border: none;
+    }
+     h2 + ul > li:hover {
+         box-shadow: none;
+     }
+    /* CSS cho phần Lưu ý chung */
+    .general-notes-list {
+        list-style-type: none; /* Bỏ dấu chấm tròn mặc định */
+        padding-left: 0; /* Bỏ padding trái mặc định */
+    }
+
+    .general-notes-list li {
+        background-color: transparent; /* Đảm bảo không có nền thẻ như bài tập */
+        padding: 8px 0; /* Thêm khoảng cách dọc nhẹ nhàng */
+        box-shadow: none; /* Bỏ đổ bóng */
+        border: none; /* Bỏ viền */
+        margin-bottom: 10px; /* Khoảng cách giữa các mục */
+        display: flex; /* Sắp xếp icon và text trên cùng hàng */
+        align-items: flex-start; /* Căn chỉnh icon với dòng đầu tiên của text */
+    }
+
+    .general-notes-list li:hover {
+        box-shadow: none; /* Đảm bảo không có hiệu ứng hover */
+        background-color: transparent;
+    }
+
+    .general-notes-list .note-icon {
+        color: var(--primary-color); /* Màu đỏ chủ đạo cho icon */
+        margin-right: 10px; /* Khoảng cách giữa icon và text */
+        font-weight: bold; /* Icon đậm hơn */
+        font-size: 1.1em; /* Kích thước icon lớn hơn chút */
+        line-height: 1.6; /* Đảm bảo icon căn thẳng hàng với text */
+    }
+
+    .general-notes-list strong {
+       font-weight: 600; /* Đảm bảo chữ đậm */
+       color: var(--text-color); /* Màu chữ bình thường hoặc màu đậm hơn tùy ý */
+       /* color: var(--secondary-color); */ /* Nếu muốn chữ đậm có màu đỏ đậm hơn */
     }
   </style>
 </head>
 <body>
 
-<h1>✨ Lộ Trình Tăng Dần 90 Ngày</h1>
+<!-- Optional: Wrap content in a container for centered layout with background -->
+<div class="container">
 
-<h2>🌿 Giai Đoạn Phát Triển</h2>
+    <h1>✨ Lộ Trình Tăng Dần 90 Ngày (Chi Tiết)</h1>
+    <p class="note">Nhấn vào tên bài tập để xem video hướng dẫn. Các số lượng/thời gian ghi dưới đây là mục tiêu 100%. Hãy điều chỉnh theo bảng "Giai Đoạn Phát Triển" cho phù hợp với tuần tập của bạn.</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Tuần</th>
-      <th>Số lượng</th>
-      <th>Vòng</th>
-      <th>Nghỉ</th>
-      <th>Ghi chú</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1–2</td>
-      <td>50–60% bài mẫu</td>
-      <td>1–1.5 vòng</td>
-      <td>40–60s</td>
-      <td>Chú trọng form, thở đúng</td>
-    </tr>
-    <tr>
-      <td>3–4</td>
-      <td>70–80% bài mẫu</td>
-      <td>2 vòng</td>
-      <td>30–40s</td>
-      <td>Bắt đầu tăng bền</td>
-    </tr>
-    <tr>
-      <td>5–8</td>
-      <td>90–100% bài mẫu</td>
-      <td>2–3 vòng (HIIT)</td>
-      <td>20–30s</td>
-      <td>Đốt mỡ tối ưu</td>
-    </tr>
-    <tr>
-      <td>9–12</td>
-      <td>100% + thêm bài khó</td>
-      <td>3 vòng trở lên</td>
-      <td>20–30s</td>
-      <td>Săn cơ, siết nết</td>
-    </tr>
-  </tbody>
-</table>
+    <h2>🌿 Giai Đoạn Phát Triển</h2>
 
-<h2>📊 Bố Cục Bài Tập</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Tuần</th>
+          <th>Số lượng / Thời gian</th>
+          <th>Vòng</th>
+          <th>Nghỉ giữa bài</th>
+          <th>Ghi chú</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1–2</td>
+          <td>50–60% mục tiêu</td>
+          <td>1–1.5 vòng</td>
+          <td>40–60s</td>
+          <td>Chú trọng form, thở đúng</td>
+        </tr>
+        <tr>
+          <td>3–4</td>
+          <td>70–80% mục tiêu</td>
+          <td>2 vòng</td>
+          <td>30–40s</td>
+          <td>Bắt đầu tăng bền</td>
+        </tr>
+        <tr>
+          <td>5–8</td>
+          <td>90–100% mục tiêu</td>
+          <td>2–3 vòng (HIIT: 40s tập / 20s nghỉ)</td>
+          <td>20–30s (hoặc 20s HIIT)</td>
+          <td>Đốt mỡ tối ưu</td>
+        </tr>
+        <tr>
+          <td>9–12</td>
+          <td>100% + thêm biến thể khó</td>
+          <td>3 vòng trở lên</td>
+          <td>20–30s</td>
+          <td>Săn cơ, siết nét</td>
+        </tr>
+      </tbody>
+    </table>
 
-<h3>☀️ Buổi Sáng: Cardio & Kích Hoạt Core (15–25 phút)</h3>
-<ul>
-  <li>Jumping Jack</li>
-  <li>High Knees</li>
-  <li>Mountain Climber</li>
-  <li>Giãn cơ toàn thân ~2 phút</li>
-</ul>
+    <h2>📊 Bố Cục Bài Tập</h2>
 
-<h3>💪 Buổi Chiều: Bài Bụng & Calisthenics Toàn Thân (25–30 phút)</h3>
+    <h3>☀️ Buổi Sáng: Cardio & Kích Hoạt Core (15–25 phút)</h3>
+    <ul>
+      <li>
+        <strong>30–45 giây:</strong> <button class="exercise-toggle">Jumping Jack</button>
+        <div class="exercise-content">
+          <iframe src="https://www.youtube.com/embed/iSSAk4XCsRA?si=ugGHsLlioHVMvbjL" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li>
+        <strong>30–45 giây:</strong> <button class="exercise-toggle">High Knees</button>
+        <div class="exercise-content">
+          <iframe src="https://www.youtube.com/embed/oDdkytliOqE?si=I4Rt-S2loVtgfZl3" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li>
+        <strong>30–45 giây:</strong> <button class="exercise-toggle">Mountain Climber</button>
+        <div class="exercise-content">
+          <iframe src="https://www.youtube.com/embed/hq_0YlyfqGM?si=WQeqYVNg_FV9WCo1" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li>
+        <strong>~2 phút:</strong> Giãn cơ toàn thân (Không cần video cụ thể, có thể tìm video giãn cơ chung)
+        <!-- No toggle needed for this one -->
+      </li>
+    </ul>
 
-<h4>✨ Ngày Chẵn: Bài Bụng (Abs)</h4>
-<ul>
-  <li>15× Crunch</li>
-  <li>15× Leg Raise</li>
-  <li>30s Plank</li>
-  <li>20× Russian Twist</li>
-  <li>10× Flutter Kick</li>
-</ul>
+    <h3>💪 Buổi Chiều: Bài Bụng & Calisthenics Toàn Thân (25–30 phút)</h3>
 
-<h4>✨ Ngày Lẻ: Toàn Thân (Calisthenics)</h4>
-<ul>
-  <li>10× Push-up</li>
-  <li>15× Bodyweight Squat</li>
-  <li>10× Tricep Dip (ghế)</li>
-  <li>20s Hollow Hold</li>
-  <li>10× Superman</li>
-</ul>
+    <h4>✨ Ngày Chẵn: Bài Bụng (Abs)</h4>
+    <ul>
+      <li>
+        <strong>15 lần:</strong> <button class="exercise-toggle">Crunch</button>
+        <div class="exercise-content">
+          <iframe src="https://www.youtube.com/embed/0t4t3IpiEao?si=2ZDghiQCEhYE4QL9" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li>
+        <strong>15 lần:</strong> <button class="exercise-toggle">Leg Raise</button>
+        <div class="exercise-content">
+          <iframe src="https://www.youtube.com/embed/l4kQd9eWclE?si=CRom2bU6n3B5t6AJ" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li>
+        <strong>30 giây:</strong> <button class="exercise-toggle">Plank</button>
+        <div class="exercise-content">
+          <iframe src="https://www.youtube.com/embed/Sf93BOo35-E?si=a4epH_5ioIR5D3yv" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li>
+        <strong>20 lần (10 mỗi bên):</strong> <button class="exercise-toggle">Russian Twist</button>
+        <div class="exercise-content">
+          <iframe src="https://www.youtube.com/embed/JyUqwkVpsi8?si=_NZYvCVVMW9BXhgZ" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </li>
+       <li>
+        <strong>30 giây:</strong> <button class="exercise-toggle">Flutter Kick</button>
+        <div class="exercise-content">
+          <iframe src="https://www.youtube.com/embed/uYrPVW5bVig?si=wR_156BDPy3XlLhd" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </li>
+    </ul>
 
-<h2>📊 Lưu Ý</h2>
-<ul>
-  <li>Tuân 1–2: Tập 1 vòng, form chắc.</li>
-  <li>Tuân 3–4: Tăng vòng, giảm thời gian nghỉ.</li>
-  <li>Tuân 5–8: Chuyển sang HIIT (40s/20s).</li>
-  <li>Tuân 9–12: Thêm biến thể nâng cao, săn nét.</li>
-</ul>
+    <h4>✨ Ngày Lẻ: Toàn Thân (Calisthenics)</h4>
+    <ul>
+      <li>
+        <strong>10 lần:</strong> <button class="exercise-toggle">Push-up</button>
+        <div class="exercise-content">
+          <iframe src="https://www.youtube.com/embed/BQAifK9T59M?si=Mhl-A5EVeYjv7-Fd" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li>
+        <strong>15 lần:</strong> <button class="exercise-toggle">Bodyweight Squat</button>
+        <div class="exercise-content">
+          <iframe src="https://www.youtube.com/embed/m0GcZ24pK6k?si=t5s_nst6khxt6xVm" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li>
+        <strong>10 lần:</strong> <button class="exercise-toggle">Tricep Dip (ghế)</button>
+        <div class="exercise-content">
+          <iframe src="https://www.youtube.com/embed/6kALZikXxLc?si=qHKrvgWTYUU4Rcax" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </li>
+       <li>
+        <strong>20 giây:</strong> <button class="exercise-toggle">Hollow Hold</button>
+        <div class="exercise-content">
+          <iframe src="https://www.youtube.com/embed/hf00_b2sRdc?si=bR260ASnhOoQQfc5" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </li>
+      <li>
+        <strong>10 lần:</strong> <button class="exercise-toggle">Superman</button>
+        <div class="exercise-content">
+          <iframe src="https://www.youtube.com/embed/rj7z2axkKHw?si=W4T76x9UCvzLvzbP" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </li>
+    </ul>
+
+    <h2>📊 Lưu Ý Chung</h2>
+    <ul class="general-notes-list"> <!-- Thêm class để dễ dàng tùy chỉnh CSS hơn -->
+      <li>
+        <span class="note-icon">✓</span> <!-- Biểu tượng checkmark -->
+        <strong>Khởi động kỹ:</strong> trước mỗi buổi tập và <strong>giãn cơ nhẹ</strong> sau khi tập xong.
+      </li>
+      <li>
+        <span class="note-icon">✓</span>
+        <strong>Lắng nghe cơ thể:</strong> Nếu thấy đau bất thường, hãy dừng lại và nghỉ ngơi. Đừng cố gắng quá sức, đặc biệt là trong những tuần đầu.
+      </li>
+      <li>
+        <span class="note-icon">✓</span>
+        <strong>Uống đủ nước:</strong> trong suốt cả ngày, nhất là trước, trong và sau khi tập.
+      </li>
+      <li>
+        <span class="note-icon">✓</span>
+        <strong>Dinh dưỡng hợp lý:</strong> Kết hợp tập luyện với chế độ ăn uống lành mạnh, đủ protein, hạn chế đồ ngọt, dầu mỡ và tinh bột xấu để đạt hiệu quả tốt nhất.
+      </li>
+      <li>
+        <span class="note-icon">✓</span>
+        <strong>Kiên trì:</strong> Kết quả cần thời gian và sự đều đặn. Hãy cố gắng bám sát lộ trình.
+      </li>
+    </ul>
+
+</div> <!-- End of container -->
+
+<script>
+  // Lấy tất cả các nút toggle
+  const toggles = document.querySelectorAll('.exercise-toggle');
+
+  // Thêm sự kiện click cho mỗi nút
+  toggles.forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      // Lấy phần content ngay sau nút được click
+      const content = toggle.nextElementSibling;
+      // Lấy trạng thái hiện tại của content (ẩn hay hiện)
+      const isDisplayed = content.style.display === 'block';
+
+      // --- Tùy chọn: Chỉ mở 1 video một lúc ---
+      // Ẩn tất cả các content khác và bỏ class 'active' khỏi các nút khác
+      document.querySelectorAll('.exercise-content').forEach(item => {
+          if (item !== content && item.style.display === 'block') { // Only hide if it's currently shown
+              item.style.display = 'none';
+          }
+      });
+      document.querySelectorAll('.exercise-toggle').forEach(item => {
+          if (item !== toggle) {
+              item.classList.remove('active');
+          }
+      });
+      // --- Kết thúc tùy chọn ---
+
+      // Toggle (bật/tắt) hiển thị của content được chọn
+      content.style.display = isDisplayed ? 'none' : 'block';
+      // Toggle class 'active' trên nút để thay đổi dấu + / - và style
+      toggle.classList.toggle('active', !isDisplayed);
+    });
+  });
+</script>
 
 </body>
 </html>
